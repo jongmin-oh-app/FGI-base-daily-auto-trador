@@ -18,11 +18,12 @@ def get_parameters_from_store():
     """AWS Parameter Store에서 파라미터 가져오기"""
     ssm = boto3.client('ssm', region_name='ap-northeast-2')
 
-    # koreainvestment 파라미터 가져오기
+    # koreainvestment 파라미터 가져오기 (StringList 타입)
     korea_investment_response = ssm.get_parameter(
         Name='koreainvestment',
         WithDecryption=True
     )
+    # StringList는 쉼표로 자동 분리되어 문자열로 반환됨
     korea_investment_values = korea_investment_response['Parameter']['Value'].split(',')
 
     # discord 파라미터 가져오기
@@ -44,11 +45,11 @@ parameters = get_parameters_from_store()
 
 @dataclass(frozen=True)
 class Config:
-    API_KEY = parameters['korea_investment'][0]
-    SECRET_KEY = parameters['korea_investment'][1]
-    HOST = parameters['korea_investment'][2]
-    CANO = parameters['korea_investment'][3]
-    ACNT_PRDT_CD = parameters['korea_investment'][4]
+    CANO = parameters['korea_investment'][0]  # 계좌번호
+    API_KEY = parameters['korea_investment'][1]  # API 키
+    SECRET_KEY = parameters['korea_investment'][2]  # 시크릿 키
+    HOST = "https://openapi.koreainvestment.com:9443"  # 고정 HOST
+    ACNT_PRDT_CD = "01"  # 직접 설정
 
 
 @dataclass(frozen=True)
