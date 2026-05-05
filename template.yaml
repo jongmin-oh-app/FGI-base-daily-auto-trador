@@ -25,7 +25,7 @@ Resources:
                 - ssm:GetParameter
                 - ssm:GetParameters
               Resource:
-                - !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/koreainvestment'
+                - !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/koreainvestment-test'
                 - !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/discord'
 
     Metadata:
